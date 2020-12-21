@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  res.json({text: "HELLO"})
+  res.json({text: "hello"})
 });
 
 app.listen(SERVER_PORT, () => {
