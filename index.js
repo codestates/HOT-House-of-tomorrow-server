@@ -82,9 +82,11 @@ app.use('/api/utils/uploadimg', uploadImg);
 
 
 app.get('/', (req, res) => {
-  res.json({text: "hello"})
+  res.json({text: "HELLO"})
 });
 
 app.listen(SERVER_PORT, () => {
-  console.log(`Server on port ${SERVER_PORT}`);
+  console.log(`Server on port ${SERVER_PORT || 5000}`);
+  res.json({text: "hello"})
 });
+
