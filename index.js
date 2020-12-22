@@ -87,4 +87,6 @@ app.get('/', (req, res) => {
 
 app.listen(SERVER_PORT, () => {
   console.log(`Server on port ${SERVER_PORT || 5000}`);
+  res.json({text: "hello"})
 });
+
