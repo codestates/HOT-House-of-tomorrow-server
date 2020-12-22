@@ -85,7 +85,7 @@ app.get('/', (req, res) => {
   res.json({text: "HELLO"})
 });
 
-app.listen(SERVER_PORT, () => {
+app.listen(SERVER_PORT || 5000, () => {
   console.log(`Server on port ${SERVER_PORT || 5000}`);
   res.json({text: "hello"})
 });
