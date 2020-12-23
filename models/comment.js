@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
     /**
@@ -14,31 +12,34 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Post);
       this.belongsTo(models.User);
     }
-  };
-  Comment.init({
-    postId: {
-      type : DataTypes.INTEGER(20),
-      allowNull : false
+  }
+  Comment.init(
+    {
+      postId: {
+        type: DataTypes.INTEGER(20),
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER(20),
+        allowNull: false,
+      },
+      comment: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      commentId: {
+        type: DataTypes.INTEGER(20),
+        allowNull: false,
+      },
+      date: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
     },
-    userId: {
-      type : DataTypes.INTEGER(20),
-      allowNull : false
-    },
-    comment: {
-      type : DataTypes.STRING(100),
-      allowNull : false
-    },
-    commentId: {
-      type : DataTypes.INTEGER(20),
-      allowNull : false
-    },
-    date: {
-      type : DataTypes.STRING(10),
-      allowNull : false
+    {
+      sequelize,
+      modelName: 'Comment',
     }
-  }, {
-    sequelize,
-    modelName: 'Comment',
-  });
+  );
   return Comment;
 };

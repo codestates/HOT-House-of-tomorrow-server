@@ -6,41 +6,41 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       postId: {
         type: Sequelize.INTEGER(20),
         allowNull: false,
-        references : {model : 'Posts', key : 'id'}
+        references: { model: 'Posts', key: 'id' },
       },
       userId: {
         type: Sequelize.INTEGER(20),
         allowNull: false,
-        references : {model : 'Users', key : 'oAuthId'}
+        references: { model: 'Users', key: 'oAuthId' },
       },
       comment: {
         type: Sequelize.STRING(100),
-        allowNull: false
+        allowNull: false,
       },
       commentId: {
         type: Sequelize.INTEGER(20),
-        allowNull: false
+        allowNull: false,
       },
       date: {
         type: Sequelize.STRING(10),
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Comments');
-  }
+  },
 };

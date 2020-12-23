@@ -16,14 +16,12 @@ const mypage = require('./routes/api/mypage/index');
 const post = require('./routes/api/post/index');
 const uploadImg = require('./routes/api/utils/uploadimg');
 
-
 // Middle-ware
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 
 // api router
 app.use('/api/auth', auth);
@@ -33,10 +31,9 @@ app.use('/api/mypage', mypage);
 app.use('/api/post', post);
 app.use('/api/utils/uploadimg', uploadImg);
 
-
 // test용
 app.get('/', (req, res) => {
-  res.json({text: "HELLO"})
+  res.json({ text: 'HELLO' });
 });
 
 app.listen(port, () => {
