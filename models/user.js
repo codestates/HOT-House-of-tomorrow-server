@@ -18,17 +18,21 @@ module.exports = (sequelize, DataTypes) => {
     oAuthId: {
       type: DataTypes.INTEGER(20),
       primaryKey: true,
+      autoIncrement: false,
+      allowNull: true,
     },
     name: {
       type : DataTypes.STRING(20),
+      allowNull: true,
     },
     email: {
       type : DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
       unique : true
     },
     nickname: {
       type : DataTypes.STRING(20),
+      allowNull: true,
       unique : true
     },
     profileImg: {
@@ -36,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     likePosts: {
       type : DataTypes.STRING(100),
+      allowNull : true
     }
   }, {
     sequelize,
