@@ -18,28 +18,29 @@ module.exports = (sequelize, DataTypes) => {
     oAuthId: {
       type: DataTypes.INTEGER(20),
       primaryKey: true,
+      autoIncrement: false,
+      allowNull: true,
     },
     name: {
       type : DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type : DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
       unique : true
     },
     nickname: {
       type : DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
       unique : true
     },
     profileImg: {
       type : DataTypes.STRING(20),
-      allowNull: true
     },
     likePosts: {
       type : DataTypes.STRING(100),
-      allowNull : false
+      allowNull : true
     }
   }, {
     sequelize,

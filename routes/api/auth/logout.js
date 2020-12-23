@@ -1,9 +1,3 @@
-const express = require('express');
-
-const router = express.Router();
-
-router.get('/', (req, res) => {
-  res.status(200).json("logout");
-});
-
-module.exports = router;
+module.exports = async (req, res) => {
+  res.clearCookie('x_auth').json({logout : "success"});
+};

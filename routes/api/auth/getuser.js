@@ -1,9 +1,24 @@
-const express = require('express');
+const { User } = require('../../../models'); 
+const jwt = require('jsonwebtoken');
+const config = require('../../../config/index')
+const { SECRET } = config;
 
-const router = express.Router();
+module.exports = async (req, res) => {
+  let token = req.cookies.x_auth;
 
-router.get('/',(req, res) => {
-  res.status(200).json("getuser");
-});
+  if(!token){
+    res.status(400).json({message:"not token"});
+  }
+  else{
+    let tokenData = jwt.verify(token, SECRET);
+    let userInfo = await User.findOne({
+      where: {email: tokenData.email}
+    });
+    res.json({
+      nickname : userInfo.nickname,
+      email: userInfo.email,
+      profileImg : userInfo.profileImg
+      });
+  } 
+};
 
-module.exports = router;

@@ -8,5 +8,5 @@ module.exports = {
   DATABASE : process.env.DATABASE,
   HOST : process.env.HOST,
   PORT : process.env.PORT,
-  KAKAO_API_KEY : process.env.KAKAO_API_KEY
+  SECRET : "fullim24hotsecret"
 };
