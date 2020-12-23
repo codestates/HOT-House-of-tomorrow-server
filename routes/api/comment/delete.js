@@ -1,9 +1,3 @@
-const express = require('express');
-
-const router = express.Router();
-
-router.post('/', (req, res) => {
-  res.status(200).json("delete comment");
-});
-
-module.exports = router;
+module.exports = (req, res) => {
+  res.json('delete');
+}

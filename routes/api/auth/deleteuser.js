@@ -1,9 +1,3 @@
-const express = require('express');
-
-const router = express.Router();
-
-router.get('/', (req, res) => {
-  res.status(200).json("deleteuser");
-});
-
-module.exports = router;
+module.exports = (req, res) => {
+  res.json('deleteuser');
+}
