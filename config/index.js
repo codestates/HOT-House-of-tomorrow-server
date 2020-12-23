@@ -7,6 +7,5 @@ module.exports = {
   PASSWORD : process.env.PASSWORD,
   DATABASE : process.env.DATABASE,
   HOST : process.env.HOST,
-  PORT : process.env.PORT,
-  KAKAO_API_KEY : process.env.KAKAO_API_KEY
+  PORT : process.env.PORT
 };
