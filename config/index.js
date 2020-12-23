@@ -7,5 +7,6 @@ module.exports = {
   PASSWORD : process.env.PASSWORD,
   DATABASE : process.env.DATABASE,
   HOST : process.env.HOST,
-  PORT : process.env.PORT
+  PORT : process.env.PORT,
+  SECRET : "fullim24hotsecret"
 };

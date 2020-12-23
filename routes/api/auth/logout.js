@@ -1,3 +1,3 @@
-module.exports = (req, res) => {
-  res.json('logout');
-}
+module.exports = async (req, res) => {
+  res.clearCookie('x_auth').json({logout : "success"});
+};
