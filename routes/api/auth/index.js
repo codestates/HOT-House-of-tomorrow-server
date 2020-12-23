@@ -15,4 +15,4 @@ router.get('/getuser', getUser);
 router.post('/updateuser', updateUser);
 router.get('/deleteuser', deleteUser);
 
-module.exports = router
+module.exports = router;
