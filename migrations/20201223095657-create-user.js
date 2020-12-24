@@ -6,7 +6,7 @@ module.exports = {
         autoIncrement: false,
         type: Sequelize.INTEGER(20),
         primaryKey: true,
-        allowNull: true
+        allowNull: true,
       },
       name: {
         type: Sequelize.STRING(20),
@@ -20,27 +20,27 @@ module.exports = {
       nickname: {
         type: Sequelize.STRING(20),
         allowNull: true,
-        unique: true
+        unique: true,
       },
       profileImg: {
         type: Sequelize.STRING(20),
-        allowNull : true
+        allowNull: true,
       },
       likePosts: {
         type: Sequelize.INTEGER(100),
-        allowNull : true
+        allowNull: true,
       },
       createdAt: {
         allowNull: true,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: true,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Users');
-  }
+  },
 };

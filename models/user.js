@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,38 +11,41 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Post);
       this.hasMany(models.Comment);
     }
-  };
-  User.init({
-    oAuthId: {
-      type: DataTypes.INTEGER(20),
-      primaryKey: true,
-      autoIncrement: false,
-      allowNull: true,
+  }
+  User.init(
+    {
+      oAuthId: {
+        type: DataTypes.INTEGER(20),
+        primaryKey: true,
+        autoIncrement: false,
+        allowNull: true,
+      },
+      name: {
+        type: DataTypes.STRING(20),
+        allowNull: true,
+      },
+      email: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        unique: true,
+      },
+      nickname: {
+        type: DataTypes.STRING(20),
+        allowNull: true,
+        unique: true,
+      },
+      profileImg: {
+        type: DataTypes.STRING(20),
+      },
+      likePosts: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+      },
     },
-    name: {
-      type : DataTypes.STRING(20),
-      allowNull: true,
-    },
-    email: {
-      type : DataTypes.STRING(100),
-      allowNull: true,
-      unique : true
-    },
-    nickname: {
-      type : DataTypes.STRING(20),
-      allowNull: true,
-      unique : true
-    },
-    profileImg: {
-      type : DataTypes.STRING(20),
-    },
-    likePosts: {
-      type : DataTypes.STRING(100),
-      allowNull : true
+    {
+      sequelize,
+      modelName: 'User',
     }
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+  );
   return User;
 };
