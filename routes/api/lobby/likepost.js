@@ -1,8 +1,7 @@
 const { verify } = require('jsonwebtoken');
 const { Post } = require('../../../models');
-const dotenv = require('dotenv');
-
-dotenv.config();
+const config = require('../../../config/index');
+const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
@@ -11,7 +10,7 @@ module.exports = async (req, res) => {
     return res.json({ code: 400, message: 'not token' });
   } else {
     try {
-      let isVerify = verify(token, process.env.SECRET);
+      let isVerify = verify(token, SECRET);
       await Post.increment(
         { like: 1 },
         { where: { userId: isVerify.oAuthId } }
