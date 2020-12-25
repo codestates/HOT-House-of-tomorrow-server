@@ -26,7 +26,7 @@ app.use(cookieParser());
 // api router
 app.use('/api/auth', auth);
 app.use('/api/comment', comment);
-app.use('/api/lobby/lobby', lobby);
+app.use('/api/lobby', lobby);
 app.use('/api/mypage', mypage);
 app.use('/api/post', post);
 app.use('/api/utils/uploadimg', uploadImg);
