@@ -1,4 +1,3 @@
-const deleteComment = require('./delete');
 const updatePost = require('./update');
 const writePost = require('./write');
 const deletePost = require('./delete');
@@ -10,7 +9,6 @@ const router = express.Router();
 router.post('/delete', deletePost);
 router.post('/update', updatePost);
 router.post('/write', writePost);
-router.get('/read', readPost);
+router.get('/read/:postId', readPost);
 
-
-module.exports = router
+module.exports = router;
