@@ -14,9 +14,9 @@ module.exports = {
         references: { model: 'Posts', key: 'id' },
       },
       userId: {
-        type: Sequelize.INTEGER(20),
+        type: Sequelize.STRING(20),
         allowNull: false,
-        references: { model: 'Users', key: 'oAuthId' },
+        references: { model: 'Users', key: 'nickname' },
       },
       comment: {
         type: Sequelize.STRING(100),
