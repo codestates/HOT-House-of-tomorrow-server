@@ -22,10 +22,6 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
-      commentId: {
-        type: Sequelize.INTEGER(20),
-        allowNull: false,
-      },
       date: {
         type: Sequelize.STRING(10),
         allowNull: false,
