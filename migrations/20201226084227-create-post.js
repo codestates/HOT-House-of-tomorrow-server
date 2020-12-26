@@ -9,9 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER(20),
       },
       userId: {
-        type: Sequelize.INTEGER(20),
+        type: Sequelize.STRING(20),
         allowNull: false,
-        references: { model: 'Users', key: 'oAuthId' },
+        references: { model: 'Users', key: 'nickname' },
       },
       acreage: {
         type: Sequelize.INTEGER(1),

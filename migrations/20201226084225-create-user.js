@@ -27,7 +27,7 @@ module.exports = {
         allowNull: true,
       },
       likePosts: {
-        type: Sequelize.INTEGER(100),
+        type: Sequelize.STRING(100),
         allowNull: true,
       },
       createdAt: {

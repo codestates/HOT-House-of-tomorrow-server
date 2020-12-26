@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.User, { foreignKey: 'userId' });
-      this.hasMany(models.Comment, { foreignKey: 'postId' });
+      this.belongsTo(models.User, { foreignKey: 'userId', targetKey : 'nickname' });
+      this.hasMany(models.Comment, { foreignKey: 'postId'});
     }
   }
   Post.init(
     {
       userId: {
-        type: DataTypes.INTEGER(20),
+        type: DataTypes.STRING(20),
         allowNull: false,
       },
       acreage: {
