@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
   const { postId, commentId, comment, date } = req.body;
 
-  if (!token) res.json({ isAuth: false, token: token });
+  if (!token) res.json({ message: "no token" });
   else {
     let tokenData = jwt.verify(token, SECRET);
     let userInfo = await User.findOne({
