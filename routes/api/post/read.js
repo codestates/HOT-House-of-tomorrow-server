@@ -1,4 +1,4 @@
-const { Post, Comment } = require('../../../models');
+const { Post, Comment, User } = require('../../../models');
 const jwt = require('jsonwebtoken');
 const config = require('../../../config/index');
 const { SECRET } = config;
@@ -12,36 +12,36 @@ module.exports = async (req, res) => {
   } else {
     try {
       jwt.verify(token, SECRET);
+
       let postData = await Post.findOne({
+        attributes: {
+          exclude: ['like', 'view', 'id', 'userId', 'createdAt', 'updatedAt'],
+        },
         where: { id: postId },
-      });
-      let commentData = await Comment.findOne({
+      }).then((el) => el.dataValues);
+
+      let commentData = await Comment.findAll({
+        include: [
+          {
+            model: User,
+            attributes: ['nickname'],
+          },
+        ],
+        attributes: {
+          exclude: ['userId', 'postId', 'id', 'createdAt', 'updatedAt'],
+        },
         where: { postId },
       });
 
-      let postInfo = postData.dataValues;
-      let commentInfo = {
-        userId : { nickname : null},
-        comment : null,
-        data : null,
-        postId : null
-      };
-      
-      if(commentData) {
-        commentInfo = commentData.dataValues;
-      }
-      delete postInfo.like;
-      delete postInfo.view;
+      commentInfo = commentData.map((el) => el.dataValues);
 
-      res.status(200).json({
-        ...postInfo,
-        postId: commentInfo.postId,
-        comment: {
-          nickname: commentInfo.userId.nickname,
-          comment: commentInfo.comment,
-          date: commentInfo.date,
-        },
-      });
+      let finalData = {
+        ...postData,
+        postId: Number(postId),
+        comment: commentInfo,
+      };
+
+      res.status(200).json({ results: finalData });
     } catch (err) {
       res.status(500).json({ postRead: false });
     }

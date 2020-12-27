@@ -5,7 +5,7 @@ const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
-  const { userId, postId } = req.body;
+  const { postId } = req.body;
 
   if (!token) {
     res.status(400).json({ message: 'not token' });
@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
         where: { postId },
       });
       await Post.destroy({
-        where: { userId },
+        where: { id : postId },
       });
       res.status(200).json({ postDeleted: true });
     } catch (err) {
