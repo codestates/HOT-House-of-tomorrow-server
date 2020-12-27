@@ -1,5 +1,5 @@
 const { verify } = require('jsonwebtoken');
-const { Post } = require('../../../models');
+const { Post, User } = require('../../../models');
 const config = require('../../../config/index');
 const { SECRET } = config;
 
@@ -11,17 +11,31 @@ module.exports = async (req, res) => {
   } else {
     try {
       verify(token, SECRET);
-      let userData = await Post.findAll({
+      let postData = await Post.findAll({
+        include: {
+          model: User,
+          attributes: ['nickname', 'profileImg'],
+        },
+        attributes: {
+          exclude: [
+            'createdAt',
+            'updatedAt',
+            'acreage',
+            'housingType',
+            'space',
+            'description',
+          ],
+        },
         where: {
           acreage: req.query.acreage,
           housingType: req.query.housingType,
           space: req.query.space,
         },
       });
-      userData = userData.map((el) => el.dataValues);
-      res.status(200).send(userData);
+      postData = postData.map((el) => el.dataValues);
+      res.status(200).json({results : postData});
     } catch (err) {
-      res.json({ code: 400, postLoad: false });
+      res.status(400).json({ postLoad: false });
     }
   }
 };

@@ -5,33 +5,33 @@ const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
+  let postId = req.body.postId;
 
   if (!token) {
-    return res.json({ code: 400, message: 'not token' });
+    return res.status(400).json({ message: 'not token' });
   } else {
     try {
       let isVerify = verify(token, SECRET);
 
-      await Post.increment(
-        { like: 1 },
-        { where: { userId: isVerify.oAuthId } }
-      );
-
-      let postId = await Post.findOne({
-        where: { userId: isVerify.oAuthId },
-      });
+      await Post.increment({ like: 1 }, { where: { id: postId } });
 
       let prevLikePostValue = await User.findOne({
         where: { oAuthId: isVerify.oAuthId },
       }).then((data) => data.dataValues.likePosts);
 
-      await User.update({
-        likePosts: prevLikePostValue + postId + ',',
-      });
+      
+      await User.update(
+        {
+          likePosts: prevLikePostValue + ',' + postId,
+        },
+        {
+          where: { oAuthId: isVerify.oAuthId },
+        }
+      );
 
-      res.json({ code: 200, updateSuccess: true });
+      res.status(200).json({ updateSuccess: true });
     } catch (err) {
-      res.json({ code: 500, updateSuccess: false });
+      res.status(500).json({ updateSuccess: false });
     }
   }
 };
