@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
       res
         .cookie('x_auth', token)
         .status(200)
-        .json({ loginSuccess: true, token: token });
+        .json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
       let newUser = await User.create({
         email: email,
