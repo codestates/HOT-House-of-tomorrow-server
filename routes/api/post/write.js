@@ -1,19 +1,39 @@
-const { Post } = require('../../../models');
+const { User, Post } = require('../../../models');
 const jwt = require('jsonwebtoken');
 const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
-  let data = req.body;
+  const {
+    acreage,
+    housingType,
+    space,
+    description,
+    roomImage,
+    color,
+    date,
+  } = req.body;
 
   if (!token) {
     res.status(400).json({ message: 'not token' });
   } else {
+    let tokenData = jwt.verify(token, SECRET);
+    let userInfo = await User.findOne({
+      where: { email: tokenData.email },
+    });
     try {
-      jwt.verify(token, SECRET);
       await Post.create({
-        ...data,
+        userId: userInfo.nickname,
+        acreage: acreage,
+        housingType: housingType,
+        space: space,
+        description: description,
+        roomImage: roomImage,
+        color: color,
+        like: 0,
+        view: 0,
+        date: date,
       });
       res.status(200).json({ posting: true });
     } catch (err) {
