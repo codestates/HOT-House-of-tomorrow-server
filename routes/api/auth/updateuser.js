@@ -5,7 +5,7 @@ const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
-  const { name, nickname, profileImg, likePosts } = req.body;
+  const { name, nickname, profileImg, likePosts, introduction } = req.body;
   if (!token) {
     res.status(400).json({ message: 'not token' });
   } else {
@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
         nickname: nickname,
         profileImg: profileImg,
         likePosts: likePosts,
+        introduction: introduction,
       },
       {
         where: { email: tokenData.email },
