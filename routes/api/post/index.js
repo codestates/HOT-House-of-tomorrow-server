@@ -9,6 +9,6 @@ const router = express.Router();
 router.post('/delete', deletePost);
 router.post('/update', updatePost);
 router.post('/write', writePost);
-router.get('/read', readPost);
+router.get('/read/:postId', readPost);
 
 module.exports = router;

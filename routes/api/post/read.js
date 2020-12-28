@@ -1,7 +1,7 @@
 const { Post, Comment, User } = require('../../../models');
 
 module.exports = async (req, res) => {
-  let postId = req.query.postId;
+  let postId = req.params.postId;
   try {
     await Post.increment('view', { where: { id: postId } });
 
