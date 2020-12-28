@@ -5,7 +5,19 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const config = require('../../../config/index');
 const { SECRET } = config;
-var firebase = require("firebase/app");
+
+const firebase = require("firebase/app");
+const stream = require('stream');
+const admin = require('firebase-admin');
+
+
+const firebaseAdmin = admin.initializeApp({
+  credential: admin.credential.cert({
+
+  })
+}, "storage");
+
+
 
 
 const storage = multer.diskStorage({
