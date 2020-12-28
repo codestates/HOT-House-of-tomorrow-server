@@ -7,23 +7,32 @@ module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
   const { postId, commentId } = req.body;
 
-  let tokenData = jwt.verify(token, SECRET);
-  let userInfo = await User.findOne({
-    attributes: ['nickname'],
-    where: { email: tokenData.email },
-  });
-
-  if (!userInfo) res.status(500).json({ message: 'no nickname' });
+  if (!token) res.status(500).json({ message: 'no token' });
   else {
-    await Comment.destroy({
-      where: {
-        userId: userInfo.nickname,
-        postId: postId,
-        id: commentId,
-      },
+    let tokenData = jwt.verify(token, SECRET);
+    let userInfo = await User.findOne({
+      attributes: ['nickname'],
+      where: { email: tokenData.email },
     });
-    res.json({
-      deleteComment: true,
+
+    let commentUserInfo = await Comment.findOne({
+      attributes: ['userId'],
+      where: { id: commentId },
     });
+
+    if (userInfo.nickname !== commentUserInfo.userId) {
+      res.status(400).json({ message: 'You are not the author of the post' });
+    } else {
+      await Comment.destroy({
+        where: {
+          userId: userInfo.nickname,
+          postId: postId,
+          id: commentId,
+        },
+      });
+      res.json({
+        deleteComment: true,
+      });
+    }
   }
 };
