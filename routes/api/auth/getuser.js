@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
       nickname: userInfo.nickname,
       email: userInfo.email,
       profileImg: userInfo.profileImg,
+      introduction: userInfo.introduction,
     });
   }
 };

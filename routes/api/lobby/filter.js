@@ -11,6 +11,27 @@ module.exports = async (req, res) => {
   } else {
     try {
       verify(token, SECRET);
+      let obj ={};
+      let acreage = req.query.acreage;
+      let housingType = req.query.housingType;
+      let space = req.query.space;
+
+      if(acreage && !housingType && !space) {
+        obj={acreage};
+      } else if(!acreage && housingType && !space) {
+        obj={housingType};
+      } else if(!acreage && !housingType && space) {
+        obj={space};
+      } else if(acreage && housingType && !space) {
+        obj = {acreage, housingType};
+      } else if(acreage && !housingType && space) {
+        obj = {acreage, space};
+      } else if(!acreage && housingType && space) {
+        obj = {housingType, space};
+      } else if(acreage && housingType && space) {
+        obj = {acreage, housingType, space};
+      }
+
       let postData = await Post.findAll({
         include: {
           model: User,
@@ -27,9 +48,7 @@ module.exports = async (req, res) => {
           ],
         },
         where: {
-          acreage: req.query.acreage,
-          housingType: req.query.housingType,
-          space: req.query.space,
+          ...obj
         },
       });
       postData = postData.map((el) => el.dataValues);
