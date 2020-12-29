@@ -8,7 +8,7 @@ const stream = require('stream');
 const admin = require('firebase-admin');
 
 const serviceAccount = require('../../../hot-project-cf39e-firebase-adminsdk-sk9as-6da8caf62f.json');
-//firebase초기화
+//firebase초기화//
 const firebaseAdmin = admin.initializeApp(
   {
     credential: admin.credential.cert(serviceAccount),
