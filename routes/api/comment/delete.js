@@ -6,9 +6,7 @@ const { SECRET } = config;
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
   const { postId, commentId } = req.body;
-
-  if (!token) res.status(500).json({ message: 'no token' });
-  else {
+  try {
     let tokenData = jwt.verify(token, SECRET);
     let userInfo = await User.findOne({
       attributes: ['nickname'],
@@ -21,7 +19,9 @@ module.exports = async (req, res) => {
     });
 
     if (userInfo.nickname !== commentUserInfo.userId) {
-      res.status(400).json({ message: 'You are not the author of the post' });
+      res
+        .status(400)
+        .json({ message: 'You are not the author of the comment' });
     } else {
       await Comment.destroy({
         where: {
@@ -34,5 +34,7 @@ module.exports = async (req, res) => {
         deleteComment: true,
       });
     }
+  } catch (err) {
+    res.status(500).json({ deleteComment: false, error: err });
   }
 };
