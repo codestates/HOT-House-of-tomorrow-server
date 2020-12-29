@@ -9,19 +9,23 @@ module.exports = async (req, res) => {
   if (!token) {
     res.status(400).json({ message: 'not token' });
   } else {
-    let tokenData = jwt.verify(token, SECRET);
-    await User.update(
-      {
-        name: name,
-        nickname: nickname,
-        profileImg: profileImg,
-        likePosts: likePosts,
-        introduction: introduction,
-      },
-      {
-        where: { email: tokenData.email },
-      }
-    );
-    res.json({ message: 'success' });
+    try {
+      let tokenData = jwt.verify(token, SECRET);
+      await User.update(
+        {
+          name: name,
+          nickname: nickname,
+          profileImg: profileImg,
+          likePosts: likePosts,
+          introduction: introduction,
+        },
+        {
+          where: { email: tokenData.email },
+        }
+      );
+      res.json({ updateSuccess: true });
+    } catch (err) {
+      res.status(500).json({ updateSuccess: false, error: err});
+    }
   }
 };
