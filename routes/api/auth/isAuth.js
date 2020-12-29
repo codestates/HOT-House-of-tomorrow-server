@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
         nickname: userInfo.nickname,
         profileImg: userInfo.profileImg,
         introduction: userInfo.introduction,
+        likeposts: userInfo.likePosts,
         isAuth: true,
       });
     }
