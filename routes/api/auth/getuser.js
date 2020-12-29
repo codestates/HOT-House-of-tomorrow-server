@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
 
   if (!token) {
-    res.status(400).json({ message: 'not token' });
+    res.status(500).json({ message: 'not token' });
   } else {
     let tokenData = jwt.verify(token, SECRET);
     let userInfo = await User.findOne({

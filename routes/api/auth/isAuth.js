@@ -6,7 +6,7 @@ const { SECRET } = config;
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
 
-  if (!token) res.json({ isAuth: false, token: token });
+  if (!token) res.status(500).json({ isAuth: false, token: 'not token' });
   else {
     let tokenData = jwt.verify(token, SECRET);
     if (!tokenData) res.state(500).json({ isAuth: false });
