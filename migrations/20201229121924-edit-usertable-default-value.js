@@ -3,14 +3,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return Promise.all([
-      queryInterface.changeColumn('Users', 'profileImg', {
+      queryInterface.changeColumn('Users', 'likePosts', {
         type: Sequelize.STRING(100),
-        allowNull: true
+        defaultValue: "0"
       }),
     ]);
   },
 
   down: async (queryInterface, Sequelize) => {
-    return Promise.all([queryInterface.changeColumn('Users', 'profileImg')]);
+    return Promise.all([queryInterface.changeColumn('Users', 'likePosts')]);
   }
 };

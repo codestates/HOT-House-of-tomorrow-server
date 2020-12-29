@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
         email: userInfo.email,
         profileImg: userInfo.profileImg,
         introduction: userInfo.introduction,
+        likePosts: userInfo.likePosts
       });
     } catch (err) {
       res.status(500).json({ updateSeccess: false, error: err });
