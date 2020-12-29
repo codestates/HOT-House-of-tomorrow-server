@@ -6,7 +6,7 @@ const { SECRET } = config;
 module.exports = async (req, res) => {
   const { oAuthId, email } = req.body;
   if (!oAuthId || !email) {
-    res.json({
+    res.status(500).json({
       loginSuccess: false,
       text: 'lack of information',
     });
