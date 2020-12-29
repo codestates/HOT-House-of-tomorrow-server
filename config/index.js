@@ -8,6 +8,7 @@ module.exports = {
   DATABASE: process.env.DATABASE,
   HOST: process.env.HOST,
   PORT: process.env.PORT,
-  SECRET: 'fullim24hotsecret',
-  GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS
+  SECRET: process.env.SECRET,
+  GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  STORAGE_BUCKET: process.env.STORAGE_BUCKET
 };
