@@ -6,15 +6,13 @@ const { SECRET } = config;
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
   const { postId, comment, date } = req.body;
+  try {
+    let tokenData = jwt.verify(token, SECRET);
+    let userInfo = await User.findOne({
+      attributes: ['nickname'],
+      where: { email: tokenData.email },
+    });
 
-  let tokenData = jwt.verify(token, SECRET);
-  let userInfo = await User.findOne({
-    attributes: ['nickname'],
-    where: { email: tokenData.email },
-  });
-  
-  if (!userInfo) res.status(500).json({ message: 'no nickname' });
-  else {
     await Comment.create({
       postId: postId,
       userId: userInfo.nickname,
@@ -22,5 +20,7 @@ module.exports = async (req, res) => {
       date: date,
     });
     res.json({ writeComment: true });
+  } catch (err) {
+    res.status(500).json({ writeComment: false, error: err });
   }
 };
