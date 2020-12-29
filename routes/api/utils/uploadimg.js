@@ -7,12 +7,10 @@ const { SECRET } = config;
 const stream = require('stream');
 const admin = require('firebase-admin');
 
-const serviceAccount = require(config.GOOGLE_APPLICATION_CREDENTIALS);
-
-//초기화
+//firebase초기화
 const firebaseAdmin = admin.initializeApp(
   {
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(config.GOOGLE_APPLICATION_CREDENTIALS),
     storageBucket: config.STORAGE_BUCKET,
   },
   'storage'
