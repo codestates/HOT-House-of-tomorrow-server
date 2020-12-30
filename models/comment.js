@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Post, { foreignKey: 'postId'});
-      this.belongsTo(models.User, { foreignKey: 'userId', targetKey : 'nickname' });
+      this.belongsTo(models.User, { foreignKey: 'userId', targetKey : 'oAuthId' });
     }
   }
   Comment.init(
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       userId: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.INTEGER(20),
         allowNull: false,
       },
       comment: {
