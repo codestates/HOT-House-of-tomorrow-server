@@ -11,12 +11,13 @@ module.exports = async (req, res) => {
   } else {
     try {
       verify(token, SECRET);
-      const { acreage, housingType, space, color } = req.query;
+      const { acreage, housingType, space, color, sort } = req.query;
 
       let obj = {};
       let arr = [acreage, housingType, space, color];
       let arr2 = ['acreage', 'housingType', 'space', 'color'];
-      arr.map((el, idx) => {
+      arr
+        .map((el, idx) => {
           if (el === undefined) {
             arr2[idx] = undefined;
           }
@@ -28,19 +29,23 @@ module.exports = async (req, res) => {
           }
         });
 
+      let order = 'id';
+      let standard = 'ASC';
+      if (sort === 'best') {
+        order = 'like';
+        standard = 'DESC';
+      } else {
+        orderCol = 'createdAt';
+        standard = 'DESC';
+      }
       let postData = await Post.findAll({
         include: {
           model: User,
           attributes: ['nickname', 'profileImg', 'introduction'],
         },
+        order: [[order, standard]],
         attributes: {
-          exclude: [
-            'createdAt',
-            'updatedAt',
-            'acreage',
-            'housingType',
-            'space',
-          ],
+          exclude: ['updatedAt', 'acreage', 'housingType', 'space'],
         },
         where: {
           ...obj,
