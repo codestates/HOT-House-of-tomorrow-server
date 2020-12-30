@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
         },
       ],
       attributes: {
-        exclude: ['userId', 'postId', 'id', 'createdAt', 'updatedAt'],
+        exclude: ['userId', 'postId', 'createdAt', 'updatedAt'],
       },
       where: { postId },
     });
