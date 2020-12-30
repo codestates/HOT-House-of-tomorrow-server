@@ -15,7 +15,6 @@ module.exports = async (req, res) => {
         where: { email: tokenData.email },
       });
       res.json({
-        name: userInfo.name,
         email: userInfo.email,
         nickname: userInfo.nickname,
         profileImg: userInfo.profileImg,

@@ -5,7 +5,7 @@ const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
-  const { name, nickname, profileImg, likePosts, introduction } = req.body;
+  const { nickname, profileImg, likePosts, introduction } = req.body;
   if (!token) {
     res.status(400).json({ message: 'not token' });
   } else {
@@ -17,7 +17,6 @@ module.exports = async (req, res) => {
       if (!userInfo) {
         await User.update(
           {
-            name: name,
             nickname: nickname,
             profileImg: profileImg,
             likePosts: likePosts,
