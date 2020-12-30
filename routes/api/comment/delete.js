@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   try {
     let tokenData = jwt.verify(token, SECRET);
     let userInfo = await User.findOne({
-      attributes: ['nickname'],
+      attributes: ['oAuthId'],
       where: { email: tokenData.email },
     });
 
@@ -18,14 +18,14 @@ module.exports = async (req, res) => {
       where: { id: commentId },
     });
 
-    if (userInfo.nickname !== commentUserInfo.userId) {
+    if (userInfo.oAuthId !== commentUserInfo.userId) {
       res
         .status(400)
         .json({ message: 'You are not the author of the comment' });
     } else {
       await Comment.destroy({
         where: {
-          userId: userInfo.nickname,
+          userId: userInfo.oAuthId,
           postId: postId,
           id: commentId,
         },
