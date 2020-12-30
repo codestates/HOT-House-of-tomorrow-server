@@ -27,31 +27,7 @@ module.exports = async (req, res) => {
       },
       where: { postId },
     });
-    let postUser = postData.dataValues.User.nickname;
-
-    let UserAnotherPosts = await Post.findAll({
-      attributes: {
-        exclude: [
-          'createdAt',
-          'updatedAt',
-          'acreage',
-          'housingType',
-          'space',
-          'color',
-          'like',
-          'view',
-          'data',
-          'description',
-        ],
-      },
-      limit: 5,
-      where: { userId: postUser },
-    });
-
-    UserAnotherPosts = UserAnotherPosts.map((el) => el.dataValues).filter(
-      (el) => el.id !== postData.dataValues.id
-    );
-
+    
     let postUser = postData.dataValues.User.nickname;
 
     let UserAnotherPosts = await Post.findAll({

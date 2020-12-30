@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
         likePosts = likePosts.split(',');
         let results = [];
         for (let postId of likePosts) {
+          if(postId === '0') continue;
           let result = await Post.findOne({
             where: { id: postId },
           });
