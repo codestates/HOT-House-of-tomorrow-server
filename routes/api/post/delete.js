@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
         where: { id: postId },
       });
 
-      if (userInfo.nickname !== postUserInfo.userId) {
+      if (userInfo.oAuthId !== postUserInfo.userId) {
         res.status(400).json({ message: 'You are not the author of the post' });
       } else {
         await Comment.destroy({

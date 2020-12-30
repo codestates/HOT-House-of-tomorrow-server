@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     });
     try {
       await Post.create({
-        userId: userInfo.nickname,
+        userId: userInfo.oAuthId,
         acreage: acreage,
         housingType: housingType,
         space: space,
