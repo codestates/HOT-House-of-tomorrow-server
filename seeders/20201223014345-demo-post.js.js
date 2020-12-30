@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Posts', [
       {
         id: 1,
-        userId: 'example',
+        userId: 1,
         acreage: 2,
         housingType: 3,
         space: 2,
