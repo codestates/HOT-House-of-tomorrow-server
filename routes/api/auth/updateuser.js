@@ -11,21 +11,33 @@ module.exports = async (req, res) => {
   } else {
     try {
       let tokenData = jwt.verify(token, SECRET);
-      await User.update(
-        {
-          name: name,
-          nickname: nickname,
-          profileImg: profileImg,
-          likePosts: likePosts,
-          introduction: introduction,
-        },
-        {
-          where: { email: tokenData.email },
-        }
-      );
-      res.json({ updateSuccess: true });
+      let userInfo = await User.findOne({
+        where: { nickname: nickname },
+      });
+      if (!userInfo) {
+        await User.update(
+          {
+            name: name,
+            nickname: nickname,
+            profileImg: profileImg,
+            likePosts: likePosts,
+            introduction: introduction,
+          },
+          {
+            where: { email: tokenData.email },
+          }
+        );
+        res.json({ updateSuccess: true });
+      } else {
+        res
+          .status(500)
+          .json({
+            updateSuccess: false,
+            message: 'It is an existing nickname',
+          });
+      }
     } catch (err) {
-      res.status(500).json({ updateSuccess: false, error: err});
+      res.status(500).json({ updateSuccess: false, error: err });
     }
   }
 };
