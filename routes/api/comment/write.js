@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
 
     await Comment.create({
       postId: postId,
-      userId: userInfo.oAuthid,
+      userId: userInfo.oAuthId,
       comment: comment,
       date: date,
     });
