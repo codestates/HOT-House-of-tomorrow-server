@@ -9,13 +9,13 @@ module.exports = async (req, res) => {
   try {
     let tokenData = jwt.verify(token, SECRET);
     let userInfo = await User.findOne({
-      attributes: ['nickname'],
+      attributes: ['oAuthId'],
       where: { email: tokenData.email },
     });
 
     await Comment.create({
       postId: postId,
-      userId: userInfo.nickname,
+      userId: userInfo.oAuthid,
       comment: comment,
       date: date,
     });
