@@ -19,7 +19,11 @@ module.exports = async (req, res) => {
       comment: comment,
       date: date,
     });
-    res.json({ writeComment: true });
+
+    let commentLastId = await Comment.findAll().map((data) => data.dataValues);
+    commentLastId  = commentLastId[commentLastId.length-1].id;
+
+    res.json({ writeComment: true, commentId : commentLastId });
   } catch (err) {
     res.status(500).json({ writeComment: false, error: err });
   }
