@@ -22,7 +22,12 @@ module.exports = async (req, res) => {
         likePosts = likePosts.split(',');
         let results = [];
         for (let postId of likePosts) {
+          if(postId === '0') continue;
           let result = await Post.findOne({
+            include: {
+              model: User,
+              attribute: ['nickname', 'profileImg'],
+            },
             where: { id: postId },
           });
           results.push(result);
