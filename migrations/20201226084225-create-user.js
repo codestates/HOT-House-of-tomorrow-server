@@ -23,10 +23,15 @@ module.exports = {
         unique: true,
       },
       profileImg: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(100),
         allowNull: true,
       },
       likePosts: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+        defaultValue: '0'
+      },
+      introduction: {
         type: Sequelize.STRING(100),
         allowNull: true,
       },
