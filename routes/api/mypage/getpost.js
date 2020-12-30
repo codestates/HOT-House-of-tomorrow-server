@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
       let userPosts = await Post.findAll({
         include: {
           model: User,
-          attribute: ['nickname'],
+          attribute: ['nickname', 'profileImg'],
         },
         where: { userId: userInfo.nickname },
       });
