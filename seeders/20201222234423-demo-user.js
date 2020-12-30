@@ -9,6 +9,7 @@ module.exports = {
       nickname : 'example',
       profileImg : 'test.png',
       likePosts : 2,
+      introduction: "test introduction",
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

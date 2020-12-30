@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.User, { foreignKey: 'userId', targetKey : 'nickname' });
+      this.belongsTo(models.User, { foreignKey: 'userId', targetKey : 'oAuthId' });
       this.hasMany(models.Comment, { foreignKey: 'postId'});
     }
   }
   Post.init(
     {
       userId: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.INTEGER(20),
         allowNull: false,
       },
       acreage: {
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       like: {
-        type: DataTypes.INTEGER(20),
+        type: DataTypes.INTEGER(100),
         allowNull: false,
         defaultValue: 0,
       },

@@ -8,8 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.Post, { foreignKey: 'userId', sourceKey : 'nickname' });
-      this.hasMany(models.Comment, { foreignKey: 'userId', sourceKey : 'nickname' });
+      this.hasMany(models.Post, { foreignKey: 'userId', sourceKey: 'oAuthId' });
+      this.hasMany(models.Comment, {
+        foreignKey: 'userId',
+        sourceKey: 'oAuthId',
+      });
     }
   }
   User.init(
@@ -18,10 +21,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER(20),
         primaryKey: true,
         autoIncrement: false,
-        allowNull: true,
-      },
-      name: {
-        type: DataTypes.STRING(20),
         allowNull: true,
       },
       email: {
@@ -35,9 +34,14 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       profileImg: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(100),
       },
       likePosts: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        defaultValue: '0'
+      },
+      introduction: {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
