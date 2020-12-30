@@ -11,41 +11,22 @@ module.exports = async (req, res) => {
   } else {
     try {
       verify(token, SECRET);
-      let obj = {};
-      let acreage = req.query.acreage;
-      let housingType = req.query.housingType;
-      let space = req.query.space;
-      let color = req.query.color;
+      const { acreage, housingType, space, color } = req.query;
 
-      if (acreage && !housingType && !space && !color) {
-        obj = { acreage };
-      } else if (!acreage && housingType && !space && !color) {
-        obj = { housingType };
-      } else if (!acreage && !housingType && space && !color) {
-        obj = { space };
-      } else if (!acreage && !housingType && !space && color) {
-        obj = { color };
-      } else if (acreage && housingType && !space && !color) {
-        obj = { acreage, housingType };
-      } else if (acreage && !housingType && space && !color) {
-        obj = { acreage, space };
-      } else if (acreage && !housingType && !space && color) {
-        obj = { acreage, color };
-      } else if (!acreage && housingType && space && !color) {
-        obj = { housingType, space };
-      } else if (!acreage && housingType && !space && color) {
-        obj = { housingType, color };
-      } else if (!acreage && !housingType && space && color) {
-        obj = { space, color };
-      } else if (acreage && housingType && space && !color) {
-        obj = { acreage, housingType, space };
-      } else if (acreage && housingType && !space && color) {
-        obj = { acreage, housingType, color };
-      } else if (!acreage && housingType && space && color) {
-        obj = { housingType, space, color };
-      } else if (acreage && housingType && space && color) {
-        obj = { acreage, housingType, space, color };
-      }
+      let obj = {};
+      let arr = [acreage, housingType, space, color];
+      let arr2 = ['acreage', 'housingType', 'space', 'color'];
+      arr.map((el, idx) => {
+          if (el === undefined) {
+            arr2[idx] = undefined;
+          }
+          return el;
+        })
+        .forEach((el, idx) => {
+          if (el !== undefined) {
+            obj[arr2[idx]] = el;
+          }
+        });
 
       let postData = await Post.findAll({
         include: {

@@ -27,6 +27,7 @@ module.exports = async (req, res) => {
       },
       where: { postId },
     });
+    
     let postUser = postData.dataValues.User.nickname;
 
     let UserAnotherPosts = await Post.findAll({
