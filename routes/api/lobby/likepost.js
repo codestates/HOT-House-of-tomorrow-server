@@ -19,19 +19,44 @@ module.exports = async (req, res) => {
         where: { email: isVerify.email },
       }).then((data) => data.dataValues.likePosts);
 
-      
-      await User.update(
-        {
-          likePosts: prevLikePostValue + ',' + postId,
-        },
-        {
-          where: { oAuthId: isVerify.oAuthId },
+      if (prevLikePostValue.indexOf(postId) !== -1) {
+        // 좋아요 취소
+        let preLikePosts = prevLikePostValue.split(',');
+        let results = '0';
+        for (let el of preLikePosts) {
+          if (el != postId && el !== '0') results = results + ',' + el;
         }
-      );
-
-      res.status(200).json({ updateSuccess: true });
+        await User.update(
+          {
+            likePosts: results,
+          },
+          {
+            where: { email: isVerify.email },
+          }
+        );
+        // 테스트용 user 정보 출력
+        let userInfo = await User.findOne({
+          where: { email: isVerify.email },
+        });
+        res.status(200).json({ updateSuccess: true, userInfo: userInfo });
+      } else {
+        // 좋아요
+        await User.update(
+          {
+            likePosts: prevLikePostValue + ',' + postId,
+          },
+          {
+            where: { email: isVerify.email },
+          }
+        );
+        // 테스트용 user 정보 출력
+        let userInfo = await User.findOne({
+          where: { email: isVerify.email },
+        });
+        res.status(200).json({ updateSuccess: true, userInfo: userInfo });
+      }
     } catch (err) {
-      res.status(500).json({ updateSuccess: false });
+      res.status(500).json({ updateSuccess: false, err: err });
     }
   }
 };
