@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
         where: { email: tokenData.email },
       });
       res.json({
+        oAuthId: userInfo.oAuthId,
         email: userInfo.email,
         nickname: userInfo.nickname,
         profileImg: userInfo.profileImg,
