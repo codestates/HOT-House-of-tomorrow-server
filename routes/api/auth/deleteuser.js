@@ -10,14 +10,17 @@ module.exports = async (req, res) => {
     res.status(500).json({ message: 'not token' });
   } else {
     let tokenData = jwt.verify(token, SECRET);
+    let userInfo = await User.findOne({
+      where: { email: tokenData.email },
+    });
     await Comment.destroy({
-      where: { userId: tokenData.oAuthId },
+      where: { userId: userInfo.oAuthId },
     });
     await Post.destroy({
-      where: { userId: tokenData.oAuthId },
+      where: { userId: userInfo.oAuthId },
     });
     await User.destroy({
-      where: { oAuthId: tokenData.oAuthId },
+      where: { oAuthId: userInfo.oAuthId },
     });
     res.json({ message: 'success' });
   }
