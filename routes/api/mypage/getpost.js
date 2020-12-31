@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
           model: User,
           attribute: ['nickname', 'profileImg'],
         },
-        where: { userId: userInfo.nickname },
+        where: { userId: userInfo.oAuthId },
       });
 
       !userPosts
