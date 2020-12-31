@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const { User } = require('../../../models');
 const config = require('../../../config/index');
 const { SECRET } = config;
 const stream = require('stream');
@@ -20,9 +21,8 @@ const firebaseAdmin = admin.initializeApp(
 var upload = multer({ storage: multer.memoryStorage() });
 
 //이미지 삭제
-router.post('/delete', (req, res) => {
+router.post('/delete', async (req, res) => {
   let token = req.cookies.x_auth;
-  let userInfo = jwt.verify(token, SECRET);
 
   if (!token) {
     res.status(400).json({ message: 'not token' });
@@ -36,10 +36,15 @@ router.post('/delete', (req, res) => {
           .delete();
         res.status(200).json({ imageUrl: null });
       } else {
+        let tokenData = jwt.verify(token, SECRET);
+        let userInfo = await User.findOne({
+          where : { email: tokenData.email}
+        }).then((data) => data.dataValues);
+
         firebaseAdmin
           .storage()
           .bucket()
-          .file(`User/user_${userInfo.email}_200x200`)
+          .file(`User/user_${userInfo.oAuthId}_200x200`)
           .delete();
         res.status(200).json({ imageUrl: null });
       }
@@ -50,10 +55,9 @@ router.post('/delete', (req, res) => {
 });
 
 //이미지 업로드
-router.post('/', upload.single('uploadImg'), (req, res) => {
+router.post('/', upload.single('uploadImg'), async (req, res) => {
   let token = req.cookies.x_auth;
-  let userInfo = jwt.verify(token, SECRET);
-
+  
   if (!token) {
     res.status(400).json({ message: 'not token' });
   } else {
@@ -65,10 +69,15 @@ router.post('/', upload.single('uploadImg'), (req, res) => {
       let file = '';
       if (Number(req.body.postId)) {
         fileName = 'post_' + req.body.postId;
-        file = firebaseAdmin.storage().bucket().file(`Post/${fileName}_200x200`);
+        file = firebaseAdmin.storage().bucket().file(`Post/${fileName}`);
       } else {
-        fileName = 'user_' + userInfo.email;
-        file = firebaseAdmin.storage().bucket().file(`User/${fileName}_200x200`);
+        let tokenData = jwt.verify(token, SECRET);
+        let userInfo = await User.findOne({
+           where : { email: tokenData.email } 
+        }).then((data) => data.dataValues);
+        
+        fileName = 'user_' + userInfo.oAuthId;
+        file = firebaseAdmin.storage().bucket().file(`User/${fileName}`);
       }
       bufferStream
         .pipe(
@@ -79,7 +88,7 @@ router.post('/', upload.single('uploadImg'), (req, res) => {
         })
         .on('finish', () => {
           console.log(fileName + ' finish');
-          res.status(200).json({ imageUrl: req.file.originalname });
+          res.status(200).json({ imageUrl: req.file.originalname});
           return;
         });
     } catch (err) {
