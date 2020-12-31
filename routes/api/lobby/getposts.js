@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
         include: [
           {
             model: User,
-            attributes: ['nickname', 'profileImg', 'introduction']
+            attributes: ['oAuthId', 'nickname', 'profileImg', 'introduction'],
           },
         ],
         attributes: {
