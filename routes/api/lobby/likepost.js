@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
       await Post.increment({ like: 1 }, { where: { id: postId } });
 
       let prevLikePostValue = await User.findOne({
-        where: { oAuthId: isVerify.oAuthId },
+        where: { email: isVerify.email },
       }).then((data) => data.dataValues.likePosts);
 
       

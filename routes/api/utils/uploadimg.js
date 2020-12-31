@@ -32,14 +32,14 @@ router.post('/delete', (req, res) => {
         firebaseAdmin
           .storage()
           .bucket()
-          .file(`Post/post_${req.body.postId}`)
+          .file(`Post/post_${req.body.postId}_200x200`)
           .delete();
         res.status(200).json({ imageUrl: null });
       } else {
         firebaseAdmin
           .storage()
           .bucket()
-          .file(`User/user_${userInfo.oAuthId}`)
+          .file(`User/user_${userInfo.email}_200x200`)
           .delete();
         res.status(200).json({ imageUrl: null });
       }
@@ -65,10 +65,10 @@ router.post('/', upload.single('uploadImg'), (req, res) => {
       let file = '';
       if (Number(req.body.postId)) {
         fileName = 'post_' + req.body.postId;
-        file = firebaseAdmin.storage().bucket().file(`Post/${fileName}`);
+        file = firebaseAdmin.storage().bucket().file(`Post/${fileName}_200x200`);
       } else {
-        fileName = 'user_' + userInfo.oAuthId;
-        file = firebaseAdmin.storage().bucket().file(`User/${fileName}`);
+        fileName = 'user_' + userInfo.email;
+        file = firebaseAdmin.storage().bucket().file(`User/${fileName}_200x200`);
       }
       bufferStream
         .pipe(
