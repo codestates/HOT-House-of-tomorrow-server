@@ -13,20 +13,19 @@ module.exports = async (req, res) => {
       where: { email: tokenData.email },
     });
 
-    console.log(userInfo.dataValues);
-
     await Comment.create({
       postId: postId,
-      userId: userInfo.dataValues.oAuthId,
+      userId: userInfo.oAuthId,
       comment: comment,
       date: date,
     });
 
-    let commentLastId = await Comment.findAll();
-    commentLastId = commentLastId.map((el) => el.dataValues);
-    commentLastId = commentLastId[commentLastId.length-1].id;
+    let commentLastId = await Comment.findAll().then((data) =>
+      data.map((el) => el.dataValues)
+    );
+    commentLastId = commentLastId[commentLastId.length - 1].id;
 
-    res.json({ writeComment: true, commentId : commentLastId });
+    res.json({ writeComment: true, commentId: commentLastId });
   } catch (err) {
     res.status(500).json({ writeComment: false, error: err });
   }
