@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['nickname', 'profileImg', 'introduction'],
+          attributes: ['nickname', 'profileImg', 'introduction', 'oAuthId'],
         },
       ],
       attributes: {
@@ -23,12 +23,12 @@ module.exports = async (req, res) => {
         },
       ],
       attributes: {
-        exclude: ['userId', 'postId', 'id', 'createdAt', 'updatedAt'],
+        exclude: ['userId', 'postId', 'createdAt', 'updatedAt'],
       },
       where: { postId },
     });
     
-    let postUser = postData.dataValues.User.nickname;
+    let postUser = postData.dataValues.User.oAuthId;
 
     let UserAnotherPosts = await Post.findAll({
       attributes: {
