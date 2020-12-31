@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
           likePosts: prevLikePostValue + ',' + postId,
         },
         {
-          where: { oAuthId: isVerify.oAuthId },
+          where: { email: isVerify.email },
         }
       );
 
