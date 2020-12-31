@@ -87,7 +87,7 @@ router.post('/', upload.single('uploadImg'), async (req, res) => {
           console.log(err);
         })
         .on('finish', () => {
-          console.log(req.file);
+          console.log(fileName + ' finish');
           res.status(200).json({ imageUrl: req.file.originalname});
           return;
         });
