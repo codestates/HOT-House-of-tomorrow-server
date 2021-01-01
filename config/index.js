@@ -9,8 +9,6 @@ module.exports = {
   HOST: process.env.HOST,
   PORT: process.env.PORT,
   SECRET: process.env.SECRET,
-  GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-  STORAGE_BUCKET: process.env.STORAGE_BUCKET,
   AWS_ACCESSKEYID: process.env.AWSAccessKeyId,
   AWS_SECRET_KEY: process.env.AWSSecretKey
 };

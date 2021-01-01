@@ -35,7 +35,13 @@ module.exports = async (req, res) => {
         view: 0,
         date: date,
       });
-      res.status(200).json({ posting: true });
+
+      let postLastId = await Post.findAll().then((data) => 
+        data.map((el) => el.dataValues)
+      );
+      postLastId = postLastId[postLastId.length - 1].id;
+
+      res.status(200).json({ posting: true, postId: postLastId });
     } catch (err) {
       res.status(500).json({ posting: false });
     }
