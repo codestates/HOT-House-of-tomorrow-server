@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
         order = 'like';
         standard = 'DESC';
       } else {
-        orderCol = 'createdAt';
+        order = 'createdAt';
         standard = 'DESC';
       }
       let postData = await Post.findAll({
