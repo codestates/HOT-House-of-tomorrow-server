@@ -1,16 +1,7 @@
-const { verify } = require('jsonwebtoken');
 const { Post, User, Comment } = require('../../../models');
-const config = require('../../../config/index');
-const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  let token = req.cookies.x_auth;
-
-  if (!token) {
-    return res.status(400).json({ message: 'not token' });
-  } else {
     try {
-      verify(token, SECRET);
       let postData = await Post.findAll({
         include: [
           {
@@ -55,5 +46,4 @@ module.exports = async (req, res) => {
     } catch (err) {
       res.status(404).json({ postLoad: false });
     }
-  }
 };
