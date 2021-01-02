@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
       let userInfo = await User.findOne({
         where: { email: tokenData.email },
       });
-      if (!userInfo) {
+      if (userInfo) {
         await User.update(
           {
             nickname: nickname,
