@@ -5,21 +5,20 @@ const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
-  const { nickname, profileImg, likePosts, introduction } = req.body;
+  const { nickname, profileImg, introduction } = req.body;
   if (!token) {
     res.status(400).json({ message: 'not token' });
   } else {
     try {
       let tokenData = jwt.verify(token, SECRET);
       let userInfo = await User.findOne({
-        where: { nickname: nickname },
+        where: { email: tokenData.email },
       });
       if (!userInfo) {
         await User.update(
           {
             nickname: nickname,
             profileImg: profileImg,
-            likePosts: likePosts,
             introduction: introduction,
           },
           {
