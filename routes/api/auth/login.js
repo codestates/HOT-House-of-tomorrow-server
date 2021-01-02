@@ -27,6 +27,8 @@ module.exports = async (req, res) => {
       let newUser = await User.create({
         email: email,
         oAuthId: oAuthId,
+        profileImg : 'https://avatars1.githubusercontent.com/u/47313528?s=88&v=4',
+        nickname : 'user'+oAuthId,
       });
       let token = jwt.sign({ email: email }, SECRET);
       res
