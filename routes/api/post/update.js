@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
 
       let tokenData = jwt.verify(token, SECRET);
       let userInfo = await User.findOne({
-        attributes: ['nickname'],
+        attributes: ['oAuthId'],
         where: { email: tokenData.email },
       });
 
