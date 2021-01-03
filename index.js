@@ -19,7 +19,7 @@ const uploadImg = require('./routes/api/utils/uploadimg');
 // Middle-ware
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: true,
     credentials: true,
   }),
 );

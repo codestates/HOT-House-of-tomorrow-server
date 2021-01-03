@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
       //   .cookie('x_auth', token)
       //   .status(200)
       //   .json({ loginSuccess: true, token: token, userInfo: userInfo });
-        res.cookies.set('x_auth', token, { sameSite: 'none', }).json({ loginSuccess: true, token: token, userInfo: userInfo });
+        res.cookies.set('x_auth', token, { secure:false, sameSite: 'none', }).json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
       let newUser = await User.create({
         email: email,
@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
       //   .cookie('x_auth', token)
       //   .status(200)
       //   .json({ loginSuccess: true, token: token, userInfo: newUser });
-      res.cookies.set('x_auth', token, { sameSite: 'none', }).json({ loginSuccess: true, token: token, userInfo: newUser });
+      res.cookies.set('x_auth', token, { secure:false, sameSite: 'none', }).json({ loginSuccess: true, token: token, userInfo: newUser });
     }
   }
 };
