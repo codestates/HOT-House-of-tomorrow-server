@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       //   .status(200)
       //   .json({ loginSuccess: true, token: token, userInfo: userInfo });
       console.log("login.js token1:", token);
-        res.cookie('x_auth', token, { secure:false, httpOnly: true }).json({ loginSuccess: true, token: token, userInfo: userInfo });
+        res.cookie('x_auth', token, { domain: 'http://house-of-tomorrow.s3-website.ap-northeast-2.amazonaws.com' ,secure:false, httpOnly: true, sameSite: 'none' }).json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
       let newUser = await User.create({
         email: email,
@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
       //   .status(200)
       //   .json({ loginSuccess: true, token: token, userInfo: newUser });
       console.log("login.js token2:", token);
-      res.cookie('x_auth', token, { secure:false, httpOnly: true }).json({ loginSuccess: true, token: token, userInfo: newUser });
+      res.cookie('x_auth', token, {domain: 'http://house-of-tomorrow.s3-website.ap-northeast-2.amazonaws.com' , secure:false, httpOnly: true, sameSite: 'none'}).json({ loginSuccess: true, token: token, userInfo: newUser });
     }
   }
 };
