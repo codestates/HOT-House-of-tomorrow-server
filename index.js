@@ -19,11 +19,7 @@ const uploadImg = require('./routes/api/utils/uploadimg');
 // Middle-ware
 app.use(
   cors({
-<<<<<<< HEAD
-    origin: 'http://house-of-tomorrow.s3-website.ap-northeast-2.amazonaws.com/',
-=======
     origin: 'http://house-of-tomorrow.s3-website.ap-northeast-2.amazonaws.com',
->>>>>>> fix/index.js
     credentials: true,
   }),
 );
