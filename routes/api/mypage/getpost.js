@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
       attributes: ['nickname', 'profileImg', 'introduction'],
       where: { oAuthId: userId },
     });
-    console.log(userInfo)
+    
     let userPosts = await Post.findAll({
       where: { userId: userId },
     });
