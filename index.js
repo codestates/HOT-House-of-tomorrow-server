@@ -17,7 +17,12 @@ const post = require('./routes/api/post/index');
 const uploadImg = require('./routes/api/utils/uploadimg');
 
 // Middle-ware
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  }),
+);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

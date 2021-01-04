@@ -5,6 +5,7 @@ const { SECRET } = config;
 
 module.exports = async (req, res) => {
   let token = req.cookies.x_auth;
+  console.log("req.cookies :", req.cookies);
 
   if (!token) res.status(500).json({ isAuth: false, token: 'not token' });
   else {
