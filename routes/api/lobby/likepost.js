@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
             where: { email: isVerify.email },
           }
         );
-        // 테스트용 user 정보 출력
+        // 테스트용 user 정보 출력//
         let userInfo = await User.findOne({
           where: { email: isVerify.email },
         });
