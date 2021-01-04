@@ -4,7 +4,8 @@ const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  let token = req.cookies.x_auth;
+  const token = req.headers['xauth'];
+  
   const { nickname, profileImg, introduction } = req.body;
   if (!token) {
     res.status(400).json({ message: 'not token' });

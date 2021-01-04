@@ -38,7 +38,7 @@ const upload = multer({
 
 //이미지 삭제
 router.post('/delete/:postId', async (req, res) => {
-  let token = req.cookies.x_auth;
+  const token = req.headers['xauth'];
 
   if (!token) {
     res.status(400).json({ message: 'not token' });

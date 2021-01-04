@@ -4,7 +4,8 @@ const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  let token = req.cookies.x_auth;
+  const token = req.headers['xauth'];
+  
   const { postId, commentId } = req.body;
   try {
     let tokenData = jwt.verify(token, SECRET);
