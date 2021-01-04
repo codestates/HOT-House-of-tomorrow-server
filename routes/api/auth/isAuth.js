@@ -4,8 +4,7 @@ const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  let token = req.cookies.x_auth;
-  console.log("req.cookies :", req.cookies);
+  const token = req.headers['xauth'];
 
   if (!token) res.status(500).json({ isAuth: false, token: 'not token' });
   else {
@@ -16,6 +15,7 @@ module.exports = async (req, res) => {
         where: { email: tokenData.email },
       });
       res.json({
+        token,
         oAuthId: userInfo.oAuthId,
         email: userInfo.email,
         nickname: userInfo.nickname,

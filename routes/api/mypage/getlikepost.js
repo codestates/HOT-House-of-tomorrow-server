@@ -4,8 +4,9 @@ const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  let token = req.cookies.x_auth;
-  if (!token) res.json({ message: 'no token' });
+  const token = req.headers['xauth'];
+
+  if (!token) res.json({ message: 'not token' });
   else {
     try {
       let tokenData = jwt.verify(token, SECRET);

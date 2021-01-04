@@ -1,18 +1,9 @@
-const { verify } = require('jsonwebtoken');
 const { Post, User, Comment } = require('../../../models');
-const config = require('../../../config/index');
-const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  let token = req.cookies.x_auth;
 
-  if (!token) {
-    return res.json({ code: 400, message: 'not token' });
-  } else {
     try {
-      verify(token, SECRET);
       const { acreage, housingType, space, color, sort } = req.query;
-
       let obj = {};
       let arr = [acreage, housingType, space, color];
       let arr2 = ['acreage', 'housingType', 'space', 'color'];
@@ -77,5 +68,4 @@ module.exports = async (req, res) => {
     } catch (err) {
       res.status(400).json({ postLoad: false });
     }
-  }
 };

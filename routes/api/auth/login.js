@@ -19,16 +19,31 @@ module.exports = async (req, res) => {
     });
     if (userInfo) {
       let token = jwt.sign({ email: email }, SECRET);
-        res.status(200).cookie('x_auth', token, { secure:true, httpOnly: true, sameSite: 'none' }).json({ loginSuccess: true, token: token, userInfo: userInfo });
+      res
+        .status(200)
+        .cookie('x_auth', token, {
+          secure: true,
+          httpOnly: true,
+          sameSite: 'none',
+        })
+        .json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
       let newUser = await User.create({
         email: email,
         oAuthId: oAuthId,
-        profileImg : 'https://avatars1.githubusercontent.com/u/47313528?s=88&v=4',
-        nickname : 'user'+oAuthId,
+        profileImg:
+          'https://avatars1.githubusercontent.com/u/47313528?s=88&v=4',
+        nickname: 'user' + oAuthId,
       });
       let token = jwt.sign({ email: email }, SECRET);
-      res.status(200).cookie('x_auth', token, { secure:true, httpOnly: true, sameSite: 'none' }).json({ loginSuccess: true, token: token, userInfo: newUser });
+      res
+        .status(200)
+        .cookie('x_auth', token, {
+          secure: true,
+          httpOnly: true,
+          sameSite: 'none',
+        })
+        .json({ loginSuccess: true, token: token, userInfo: newUser });
     }
   }
 };

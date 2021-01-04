@@ -4,7 +4,7 @@ const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  let token = req.cookies.x_auth;
+  const token = req.headers['xauth'];
   let postId = req.body.postId;
 
   if (!token) {
@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
             where: { email: isVerify.email },
           }
         );
-        // 테스트용 user 정보 출력
+        // 테스트용 user 정보 출력//
         let userInfo = await User.findOne({
           where: { email: isVerify.email },
         });
