@@ -1,7 +1,4 @@
-const { User, Comment } = require('../../../models');
-const jwt = require('jsonwebtoken');
-const config = require('../../../config/index');
-const { SECRET } = config;
+const { Comment } = require('../../../models');
 
 module.exports = async (req, res) => {
   const { oAuthId } = req.user;

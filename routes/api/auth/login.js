@@ -13,8 +13,7 @@ module.exports = async (req, res) => {
   } else {
     let userInfo = await User.findOne({
       where: {
-        oAuthId: oAuthId,
-        email: email,
+        oAuthId: oAuthId
       },
     });
     if (userInfo) {
