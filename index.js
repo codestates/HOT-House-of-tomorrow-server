@@ -19,7 +19,7 @@ const uploadImg = require('./routes/api/utils/uploadimg');
 // Middle-ware
 app.use(
   cors({
-    origin: true,
+    // origin: ['http://localhost:5000'],
     credentials: true,
   }),
 );
@@ -36,9 +36,18 @@ app.use('/api/mypage', mypage);
 app.use('/api/post', post);
 app.use('/api/utils/uploadimg', uploadImg);
 
-// test용
-app.get('/', (req, res) => {
-  res.json({ text: 'HELLO' });
+// Error 처리
+app.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+
+app.use((err, req, res) => {
+  res.locals.message = err.message;
+  res.locals.error = config.NODE_ENV === "development" ? err : {};
+  res.status(err.status || 500);
+  res.end();
 });
 
 app.listen(port, () => {
