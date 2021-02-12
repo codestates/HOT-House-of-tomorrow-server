@@ -1,7 +1,4 @@
 const { User } = require('../../../models');
-const jwt = require('jsonwebtoken');
-const config = require('../../../config/index');
-const { SECRET } = config;
 
 module.exports = async (req, res) => {
   const { email } = req.user;
