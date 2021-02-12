@@ -18,7 +18,13 @@ module.exports = async (req, res) => {
       },
     });
     if (userInfo) {
-      let token = jwt.sign({ email: email }, SECRET);
+      let token = jwt.sign(
+        {
+          oAuthId: oAuthId,
+          email: email,
+        },
+        SECRET
+      );
       res
         .status(200)
         .cookie('x_auth', token, {
