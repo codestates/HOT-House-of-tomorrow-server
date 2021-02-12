@@ -37,18 +37,18 @@ app.use('/api/post', post);
 app.use('/api/utils/uploadimg', uploadImg);
 
 // Error 처리
-// app.use((req, res, next) => {
-//   const err = new Error("Not Found");
-//   err.status = 404;
-//   next(err);
-// });
+app.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
 
-// app.use((err, req, res) => {
-//   res.locals.message = err.message;
-//   res.locals.error = config.NODE_ENV === "development" ? err : {};
-//   res.status(err.status || 500);
-//   res.end();
-// });
+app.use((err, req, res) => {
+  res.locals.message = err.message;
+  res.locals.error = config.NODE_ENV === "development" ? err : {};
+  res.status(err.status || 500);
+  res.end();
+});
 
 app.listen(port, () => {
   console.log(`Server on port ${port}`);
