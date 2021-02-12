@@ -1,21 +1,14 @@
 const { User, Post } = require('../../../models');
-const jwt = require('jsonwebtoken');
-const config = require('../../../config/index');
-const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  const token = req.headers['xauth'];
+  const { oAuthId } = req.user;
 
-  if (!token) res.json({ message: 'not token' });
+  if (!req.user) res.json({ getlikepost: false, message: 'not token' });
   else {
     try {
-      let tokenData = jwt.verify(token, SECRET);
-      let userInfo = await User.findOne({
-        where: { email: tokenData.email },
-      });
       let likes = await User.findOne({
         attributes: ['likePosts'],
-        where: { email: userInfo.email },
+        where: { oAuthId: oAuthId },
       });
       let { likePosts } = likes;
       if (likePosts === '0') res.json({ message: 'no like post' });
@@ -23,7 +16,7 @@ module.exports = async (req, res) => {
         likePosts = likePosts.split(',');
         let results = [];
         for (let postId of likePosts) {
-          if(postId === '0') continue;
+          if (postId === '0') continue;
           let result = await Post.findOne({
             include: {
               model: User,
