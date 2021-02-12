@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   } else {
     let userInfo = await User.findOne({
       where: {
-        oAuthId: oAuthId,
+        oAuthId: oAuthId
       },
     });
     if (userInfo) {
