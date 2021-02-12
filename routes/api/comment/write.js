@@ -4,28 +4,17 @@ const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  const token = req.headers['xauth'];
+  const { oAuthId } = req.user;
   const { postId, comment, date } = req.body;
   try {
-    let tokenData = jwt.verify(token, SECRET);
-    let userInfo = await User.findOne({
-      attributes: ['oAuthId'],
-      where: { email: tokenData.email },
-    });
-
-    await Comment.create({
+    let newComment = await Comment.create({
       postId: postId,
-      userId: userInfo.oAuthId,
+      userId: oAuthId,
       comment: comment,
       date: date,
     });
 
-    let commentLastId = await Comment.findAll().then((data) =>
-      data.map((el) => el.dataValues)
-    );
-    commentLastId = commentLastId[commentLastId.length - 1].id;
-
-    res.json({ writeComment: true, commentId: commentLastId });
+    res.json({ writeComment: true, commentId: newComment.id });
   } catch (err) {
     res.status(500).json({ writeComment: false, error: err });
   }

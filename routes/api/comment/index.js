@@ -2,12 +2,13 @@ const deleteComment = require('./delete');
 const updateComment = require('./update');
 const writeComment = require('./write');
 
+const jwtMiddleware = require('../../lib/jwtMiddleware');
+
 const express = require('express');
 const router = express.Router();
 
-router.post('/delete', deleteComment);
-router.post('/update', updateComment);
-router.post('/write', writeComment);
+router.post('/delete', jwtMiddleware, deleteComment);
+router.post('/update', jwtMiddleware, updateComment);
+router.post('/write', jwtMiddleware, writeComment);
 
-
-module.exports = router
+module.exports = router;

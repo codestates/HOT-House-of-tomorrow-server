@@ -11,6 +11,7 @@ const jwtMiddleware = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, SECRET);
     req.user = {
+      oAuthId: decoded.oAuthId,
       email: decoded.email,
     };
 
@@ -18,9 +19,10 @@ const jwtMiddleware = async (req, res, next) => {
     if (decoded.exp - now < 60 * 60 * 24 * 3.5) {
       const user = await User.findOne({
         where: { email: decoded.email },
-      })
+      });
       const refreshToken = jwt.sign(
         {
+          oAuthId: decoded.oAuthId,
           email: user.email,
         },
         SECRET,
