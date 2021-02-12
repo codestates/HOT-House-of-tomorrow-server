@@ -4,14 +4,13 @@ const config = require('../../../config/index');
 const { SECRET } = config;
 
 module.exports = async (req, res) => {
-  const token = req.headers['xauth'];
+  const { email } = req.user;
 
-  if (!token) {
-    res.status(500).json({ message: 'not token' });
+  if (!email) {
+    res.status(500).json({ deleteSeccess: false });
   } else {
-    let tokenData = jwt.verify(token, SECRET);
     let userInfo = await User.findOne({
-      where: { email: tokenData.email },
+      where: { email: email },
     });
     await Comment.destroy({
       where: { userId: userInfo.oAuthId },
@@ -22,6 +21,6 @@ module.exports = async (req, res) => {
     await User.destroy({
       where: { oAuthId: userInfo.oAuthId },
     });
-    res.json({ message: 'success' });
+    res.json({ deleteSeccess: true });
   }
 };
