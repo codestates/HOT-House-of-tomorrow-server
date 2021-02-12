@@ -1,15 +1,15 @@
 const { User } = require('../../../models');
 
 module.exports = async (req, res) => {
-  const { email } = req.user;
+  const { oAuthId } = req.user;
 
-  if (!email) res.status(500).json({ isAuth: false });
+  if (!req.user) res.status(500).json({ isAuth: false });
   else {
     let userInfo = await User.findOne({
       attributes: {
         exclude: ['updatedAt', 'createdAt'],
       },
-      where: { email: email },
+      where: { oAuthId: oAuthId },
     });
     res.json({
       oAuthId: userInfo.oAuthId,

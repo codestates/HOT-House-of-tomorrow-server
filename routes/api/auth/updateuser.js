@@ -1,9 +1,9 @@
 const { User } = require('../../../models');
 
 module.exports = async (req, res) => {
-  const { email } = req.user;
+  const { oAuthId } = req.user;
   const { nickname, profileImg, introduction } = req.body;
-  if (!email) {
+  if (!req.user) {
     res.status(400).json({ updateSuccess: false });
   } else {
     try {
@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
           introduction: introduction,
         },
         {
-          where: { email: email },
+          where: { oAuthId: oAuthId },
         }
       );
       res.json({ updateSuccess: true });

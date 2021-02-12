@@ -1,13 +1,13 @@
 const { User } = require('../../../models');
 
 module.exports = async (req, res) => {
-  const { email } = req.user;
-  if (!email) {
+  const { oAuthId } = req.user;
+  if (!req.user) {
     res.status(500).json({ updateSeccess: false });
   } else {
     try {
       let userInfo = await User.findOne({
-        where: { email: email },
+        where: { oAuthId: oAuthId },
       });
       res.json({
         updateSeccess: true,
