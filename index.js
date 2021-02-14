@@ -21,7 +21,7 @@ app.use(
   cors({
     // origin: ['http://localhost:5000'],
     credentials: true,
-  }),
+  })
 );
 app.use(morgan('dev'));
 app.use(express.json());
@@ -29,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // api router
+app.get('/', (req, res) => res.status(200).end());
 app.use('/api/auth', auth);
 app.use('/api/comment', comment);
 app.use('/api/lobby', lobby);
@@ -38,14 +39,14 @@ app.use('/api/utils/uploadimg', uploadImg);
 
 // Error 처리
 app.use((req, res, next) => {
-  const err = new Error("Not Found");
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 app.use((err, req, res) => {
   res.locals.message = err.message;
-  res.locals.error = config.NODE_ENV === "development" ? err : {};
+  res.locals.error = config.NODE_ENV === 'development' ? err : {};
   res.status(err.status || 500);
   res.end();
 });
