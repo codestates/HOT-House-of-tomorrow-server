@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -26,7 +27,7 @@ app.use(
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser('asdasd'));
 
 // api router
 app.get('/', (req, res) => res.status(200).end());
@@ -51,6 +52,4 @@ app.use((err, req, res) => {
   res.end();
 });
 
-app.listen(port, () => {
-  console.log(`Server on port ${port}`);
-});
+app.listen(port);
