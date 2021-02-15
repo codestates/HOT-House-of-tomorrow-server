@@ -19,7 +19,8 @@ const uploadImg = require('./routes/api/utils/uploadimg');
 // Middle-ware
 app.use(
   cors({
-    // origin: ['http://localhost:5000'],
+    origin: ['https://www.houseoftomorrow.cf'],
+    methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true,
   })
 );
