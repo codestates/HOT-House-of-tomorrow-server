@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -24,10 +25,23 @@ app.use(
     credentials: true,
   })
 );
-app.use(morgan('dev'));
+app.use(morgan('combined'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser('asdasd'));
+app.use(
+  session({
+    secret: 'asdasd',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+  })
+);
 
 // api router
 app.get('/', (req, res) => res.status(200).end());

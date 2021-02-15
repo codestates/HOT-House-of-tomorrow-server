@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       res
         .status(200)
         .cookie('x_auth', token, {
-          secure: false,
+          secure: true,
           httpOnly: true,
           sameSite: 'lax',
         })
@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
       res
         .status(200)
         .cookie('x_auth', token, {
-          secure: false,
+          secure: true,
           httpOnly: true,
           sameSite: 'lax',
         })
