@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   } else {
     let userInfo = await User.findOne({
       where: {
-        oAuthId: oAuthId
+        oAuthId: oAuthId,
       },
     });
     if (userInfo) {
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
         .cookie('x_auth', token, {
           secure: false,
           httpOnly: true,
-          sameSite: 'none',
+          sameSite: 'lax',
         })
         .json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
         .cookie('x_auth', token, {
           secure: false,
           httpOnly: true,
-          sameSite: 'none',
+          sameSite: 'lax',
         })
         .json({ loginSuccess: true, token: token, userInfo: newUser });
     }
