@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const config = require('./config/index');
-const { SERVER_PORT } = config;
+const { SERVER_PORT, COOKIE_SECRET } = config;
 const port = SERVER_PORT || 5000;
 
 // Routes
@@ -20,7 +20,11 @@ const uploadImg = require('./routes/api/utils/uploadimg');
 // Middle-ware
 app.use(
   cors({
-    origin: ['https://www.houseoftomorrow.cf'],
+    origin: [
+      'http://localhost:3000',
+      'https://www.houseoftomorrow.cf',
+      'https://houseoftomorrow.cf',
+    ],
     methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true,
   })
@@ -28,10 +32,10 @@ app.use(
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('asdasd'));
+app.use(cookieParser(COOKIE_SECRET));
 app.use(
   session({
-    secret: 'asdasd',
+    secret: COOKIE_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {

@@ -10,5 +10,6 @@ module.exports = {
   PORT: process.env.PORT,
   SECRET: process.env.SECRET,
   AWS_ACCESSKEYID: process.env.AWSAccessKeyId,
-  AWS_SECRET_KEY: process.env.AWSSecretKey
+  AWS_SECRET_KEY: process.env.AWSSecretKey,
+  COOKIE_SECRET: process.env.COOKIE_SECRET,
 };
