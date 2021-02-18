@@ -17,13 +17,15 @@ module.exports = async (req, res) => {
       },
     });
     if (userInfo) {
-      let token = jwt.sign({ oAuthId: oAuthId, email: email }, SECRET);
+      let token = jwt.sign({ oAuthId: oAuthId, email: email }, SECRET, {
+        expiresIn: '7d',
+      });
       res
         .status(200)
         .cookie('x_auth', token, {
-          secure: false,
+          secure: true,
           httpOnly: true,
-          sameSite: 'lax',
+          sameSite: 'none',
         })
         .json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
@@ -34,13 +36,16 @@ module.exports = async (req, res) => {
           'https://avatars1.githubusercontent.com/u/47313528?s=88&v=4',
         nickname: 'user' + oAuthId,
       });
-      let token = jwt.sign({ oAuthId: oAuthId, email: email }, SECRET);
+      let token = jwt.sign({ oAuthId: oAuthId, email: email }, SECRET, {
+        expiresIn: '7d',
+      });
       res
         .status(200)
         .cookie('x_auth', token, {
-          secure: false,
+          secure: true,
           httpOnly: true,
-          sameSite: 'lax',
+          sameSite: 'none',
+          maxAge: 1000 * 60 * 60 * 24 * 7,
         })
         .json({ loginSuccess: true, token: token, userInfo: newUser });
     }
