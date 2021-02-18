@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -19,16 +20,31 @@ const uploadImg = require('./routes/api/utils/uploadimg');
 // Middle-ware
 app.use(
   cors({
-    // origin: ['http://localhost:5000'],
+    origin: ['https://www.houseoftomorrow.cf'],
+    methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true,
-  }),
+  })
 );
-app.use(morgan('dev'));
+app.use(morgan('combined'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser('asdasd'));
+app.use(
+  session({
+    secret: 'asdasd',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+  })
+);
 
 // api router
+app.get('/', (req, res) => res.status(200).end());
 app.use('/api/auth', auth);
 app.use('/api/comment', comment);
 app.use('/api/lobby', lobby);
@@ -38,18 +54,16 @@ app.use('/api/utils/uploadimg', uploadImg);
 
 // Error 처리
 app.use((req, res, next) => {
-  const err = new Error("Not Found");
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 app.use((err, req, res) => {
   res.locals.message = err.message;
-  res.locals.error = config.NODE_ENV === "development" ? err : {};
+  res.locals.error = config.NODE_ENV === 'development' ? err : {};
   res.status(err.status || 500);
   res.end();
 });
 
-app.listen(port, () => {
-  console.log(`Server on port ${port}`);
-});
+app.listen(port);

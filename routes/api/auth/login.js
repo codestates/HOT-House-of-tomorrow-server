@@ -5,6 +5,7 @@ const { SECRET } = config;
 
 module.exports = async (req, res) => {
   const { oAuthId, email } = req.body;
+
   if (!oAuthId || !email) {
     res.status(500).json({
       loginSuccess: false,
@@ -26,6 +27,7 @@ module.exports = async (req, res) => {
           secure: true,
           httpOnly: true,
           sameSite: 'none',
+          maxAge: 1000 * 60 * 60 * 24 * 7
         })
         .json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
@@ -39,6 +41,7 @@ module.exports = async (req, res) => {
       let token = jwt.sign({ oAuthId: oAuthId, email: email }, SECRET, {
         expiresIn: '7d',
       });
+
       res
         .status(200)
         .cookie('x_auth', token, {

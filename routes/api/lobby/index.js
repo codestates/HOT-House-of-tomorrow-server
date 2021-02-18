@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.get('/getposts', getPost);
 router.post('/likepost', likePost);
-router.get('/filter', jwtMiddleware, filter);
+router.get('/filter', filter);
 
-module.exports = router
+module.exports = router;
