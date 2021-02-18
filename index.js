@@ -9,14 +9,6 @@ const config = require('./config/index');
 const { SERVER_PORT, COOKIE_SECRET } = config;
 const port = SERVER_PORT || 5000;
 
-// Routes
-const auth = require('./routes/api/auth/index');
-const comment = require('./routes/api/comment/index');
-const lobby = require('./routes/api/lobby/index');
-const mypage = require('./routes/api/mypage/index');
-const post = require('./routes/api/post/index');
-const uploadImg = require('./routes/api/utils/uploadimg');
-
 // Middle-ware
 app.use(
   cors({
@@ -47,6 +39,13 @@ app.use(
   })
 );
 
+// Routes
+const auth = require('./routes/api/auth/index');
+const comment = require('./routes/api/comment/index');
+const lobby = require('./routes/api/lobby/index');
+const mypage = require('./routes/api/mypage/index');
+const post = require('./routes/api/post/index');
+const uploadImg = require('./routes/api/utils/uploadimg');
 // api router
 app.get('/', (req, res) => res.status(200).end());
 app.use('/api/auth', auth);
