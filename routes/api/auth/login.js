@@ -26,8 +26,8 @@ module.exports = async (req, res) => {
         .cookie('x_auth', token, {
           secure: true,
           httpOnly: true,
-          sameSite: 'none',
-          maxAge: 1000 * 60 * 60 * 24 * 7
+          sameSite: 'lax',
+          maxAge: 1000 * 60 * 60 * 24 * 7,
         })
         .json({ loginSuccess: true, token: token, userInfo: userInfo });
     } else {
@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
         .cookie('x_auth', token, {
           secure: true,
           httpOnly: true,
-          sameSite: 'none',
+          sameSite: 'lax',
           maxAge: 1000 * 60 * 60 * 24 * 7,
         })
         .json({ loginSuccess: true, token: token, userInfo: newUser });
