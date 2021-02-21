@@ -19,7 +19,7 @@ const s3 = new AWS.S3();
 const upload = multer({
   storage: multerS3({
       s3: s3,
-      bucket: "hot-image", 
+      bucket: "hot-server", 
       acl: 'public-read-write', 
       key: async (req, file, cb) => {
             if(Number(req.params.postId)) {
@@ -37,7 +37,7 @@ const upload = multer({
 });
 
 //이미지 삭제
-router.post('/delete/:postId', async (req, res) => {
+router.post('/delete/:postId',  async (req, res) => {
   const token = req.headers['xauth'];
 
   if (!token) {
