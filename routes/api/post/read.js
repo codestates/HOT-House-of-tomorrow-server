@@ -1,4 +1,5 @@
 const { Post, Comment, User } = require('../../../models');
+
 module.exports = async (req, res) => {
   let postId = req.params.postId;
   try {
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
       },
       where: { postId },
     });
-    
+
     let postUser = postData.dataValues.User.oAuthId;
 
     let UserAnotherPosts = await Post.findAll({
