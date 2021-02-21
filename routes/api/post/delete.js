@@ -1,40 +1,27 @@
-const { User, Post, Comment } = require('../../../models');
-const jwt = require('jsonwebtoken');
-const config = require('../../../config/index');
-const { SECRET } = config;
+const { Post, Comment } = require('../../../models');
 
 module.exports = async (req, res) => {
-  const token = req.headers['xauth'];
+  const { oAuthId } = req.user;
   const { postId } = req.body;
 
-  if (!token) {
-    res.status(400).json({ message: 'not token' });
-  } else {
-    try {
-      let tokenData = jwt.verify(token, SECRET);
-      let userInfo = await User.findOne({
-        attributes: ['oAuthId'],
-        where: { email: tokenData.email },
-      });
+  try {
+    let postUserInfo = await Post.findOne({
+      attributes: ['userId'],
+      where: { id: postId },
+    });
 
-      let postUserInfo = await Post.findOne({
-        attributes: ['userId'],
+    if (oAuthId !== postUserInfo.userId) {
+      res.status(400).json({ message: 'You are not the author of the post' });
+    } else {
+      await Comment.destroy({
+        where: { postId },
+      });
+      await Post.destroy({
         where: { id: postId },
       });
-
-      if (userInfo.oAuthId !== postUserInfo.userId) {
-        res.status(400).json({ message: 'You are not the author of the post' });
-      } else {
-        await Comment.destroy({
-          where: { postId },
-        });
-        await Post.destroy({
-          where: { id: postId },
-        });
-        res.status(200).json({ postDeleted: true });
-      }
-    } catch (err) {
-      res.status(500).json({ postDeleted: false });
+      res.status(200).json({ postDeleted: true });
     }
+  } catch (err) {
+    res.status(500).json({ postDeleted: false });
   }
 };
